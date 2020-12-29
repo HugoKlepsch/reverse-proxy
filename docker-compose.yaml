@@ -1,0 +1,19 @@
+version: '3'
+
+networks:
+  reverse-proxy:
+    driver: bridge
+
+services:
+  reverse:
+    container_name: reverse
+    hostname: reverse
+    image: nginx
+    networks:
+      - reverse-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /home/hugo/reverse-proxy/config:/etc/nginx
+      - /home/hugo/reverse-proxy/certs:/etc/ssl/private
