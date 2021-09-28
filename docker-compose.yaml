@@ -1,8 +1,8 @@
 version: '3'
 
 networks:
-  reverse-proxy:
-    driver: bridge
+  reverse-proxy-network_reverse-proxy-network:
+    external: true
 
 services:
   reverse:
@@ -10,7 +10,7 @@ services:
     hostname: reverse
     image: nginx
     networks:
-      - reverse-proxy
+      - reverse-proxy-network_reverse-proxy-network
     ports:
       - 80:80
       - 443:443

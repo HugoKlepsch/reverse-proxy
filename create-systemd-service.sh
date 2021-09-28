@@ -9,8 +9,8 @@ echo "Creating systemd service... /etc/systemd/system/${SERVICENAME}.service"
 cat >$SERVICENAME.service <<EOF
 [Unit]
 Description=$SERVICENAME
-Requires=docker.service
-After=docker.service
+Requires=docker.service reverse-proxy-network.service buzz.service
+After=docker.service reverse-proxy-network.service buzz.service
 
 [Service]
 Restart=always
@@ -18,7 +18,7 @@ User=root
 Group=docker
 WorkingDirectory=$(pwd)
 # Shutdown container (if running) when unit is started
-# ExecStartPre=$(which docker-compose) -f docker-compose.yaml down
+ExecStartPre=$(which docker-compose) -f docker-compose.yaml down
 # Start container when unit is started
 ExecStart=$(which docker-compose) -f docker-compose.yaml up
 # Stop container when unit is stopped
