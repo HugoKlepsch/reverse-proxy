@@ -14,6 +14,9 @@ services:
     ports:
       - 80:80
       - 443:443
+    # For Pavlov
+      - 7777:7777
+      - 8177:8177
     volumes:
       - /home/hugo/reverse-proxy/config:/etc/nginx
       - /home/hugo/reverse-proxy/certs:/etc/ssl/private
