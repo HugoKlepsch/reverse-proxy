@@ -12,11 +12,13 @@ services:
     networks:
       - reverse-proxy-network_reverse-proxy-network
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     # For Pavlov
-      - 7777:7777
-      - 8177:8177
+      - "7777:7777/tcp"
+      - "8177:8177/tcp"
+      - "7777:7777/udp"
+      - "8177:8177/udp"
     volumes:
       - /home/hugo/reverse-proxy/config:/etc/nginx
       - /home/hugo/reverse-proxy/certs:/etc/ssl/private
