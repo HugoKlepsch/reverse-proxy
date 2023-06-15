@@ -14,11 +14,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    # For Pavlov
-      - "7777:7777/tcp"
-      - "8177:8177/tcp"
-      - "7777:7777/udp"
-      - "8177:8177/udp"
+      - "2224:2224"
+      - "32400:32400"
     volumes:
       - /home/hugo/reverse-proxy/config:/etc/nginx
       - /home/hugo/reverse-proxy/certs:/etc/ssl/private
