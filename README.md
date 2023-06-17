@@ -5,7 +5,7 @@
 * See [HugoKlepsch/reverse-proxy-network](https://github.com/HugoKlepsch/reverse-proxy-network)
 for files to create network.
 
-* Use [create-systemd-service.sh][create-systemd-service.sh] to create a
+* Use [create-systemd-service.sh](create-systemd-service.sh) to create a
 systemd service that auto-starts on boot.
 
 # Adding a new app
@@ -13,7 +13,7 @@ systemd service that auto-starts on boot.
 ## Port
 
 If your app uses a new port, add it to the list of exposed ports in
-[docker-compose.yaml][docker-compose.yaml].
+[docker-compose.yaml](docker-compose.yaml).
 If your sever has a firewall, add the port to the allowed list.
 
 ## Layer 7 (HTTP) reverse proxy
@@ -21,7 +21,7 @@ If your sever has a firewall, add the port to the allowed list.
 If your app should be accessed via HTTP, use this section.
 
 * Add a new file under `config/conf.d/sites-available/`
-[link][config/conf.d/sites-available/]
+[link](config/conf.d/sites-available/)
 * The port in the `server` block is the port that will listen for new
 connections.
 * The host and port in the `upstream` block is where the reverse proxy will
@@ -48,7 +48,7 @@ server {
 }
 ```
 
-* Add a `server` block that listens on port 443 with ssl. It should have a
+* Add a `server` block that listens on port 443 with SSL. It should have a
 `proxy_pass` directive that points to the upstream app (`foo` from earlier).
 Ex:
 
@@ -73,22 +73,22 @@ accessed via HTTP. You should trust the connection between the reverse-proxy
 and the app, or use some other form of encryption for the connection. In my
 case the connection from reverse-proxy and app is tunnelled over a VPN.
 * Add the configuration to the `config/conf.d/sites-enabled/`
-[directory][config/conf.d/sites-enabled/] by making a symbolic link:
+[directory](config/conf.d/sites-enabled/) by making a symbolic link:
 
 ```bash
 $ cd config/conf.d/sites-enabled/
 $ ln -s ../sites-availble/my-site.conf my-site.conf
 ```
 
-* Once you [reload configuratoin][#reload-configuration], the new proxy will
-be availble.
+* Once you [reload configuration](#reload-configuration), the new proxy will
+be available.
 
 ## Layer 4 (TCP) reverse proxy
 
 If your app does not use HTTP, or if it only uses TCP, use this section.
 
 * Add a new file under `config/conf.d/stream/sites-available/`
-[link][config/conf.d/stream/sites-available/]
+[link](config/conf.d/stream/sites-available/)
 * The port in the `server` block is the port that will listen for new connections.
 * The host and port in the `upstream` block is where the reverse proxy will forward
 new connections to.
@@ -112,14 +112,14 @@ server {
 ```
 
 * Add the configuration to the `config/conf.d/stream/sites-enabled/`
-[directory][config/conf.d/stream/sites-enabled/] by making a symbolic link:
+[directory](config/conf.d/stream/sites-enabled/) by making a symbolic link:
 
 ```bash
 $ cd config/conf.d/stream/sites-enabled/
 $ ln -s ../sites-availble/my-site.conf my-site.conf
 ```
 
-* Once you [reload configuratoin][#reload-configuration], the new proxy will be availble.
+* Once you [reload configuration](#reload-configuration), the new proxy will be available.
 
 # Reload configuration
 
@@ -145,10 +145,10 @@ sudo systemctl restart reverse.service
 
 SSL was provided by [Let's Encrypt.][1]
 
-* Fill out your `base_domain` and `subdomains` in [init-letsencrypt.sh][init-letsencrypt.sh].
+* Fill out your `base_domain` and `subdomains` in [init-letsencrypt.sh](init-letsencrypt.sh).
 * Set `staging` to `1` if you want to test out your config settings before making
 requests to Let's Encrypt that will count against your
-[rate limit][https://letsencrypt.org/docs/rate-limits/].
+[rate limit](https://letsencrypt.org/docs/rate-limits/).
 * Run `./init-letsencrypt.sh` to initialize the Let's Encrypt configuration.
 * You can then start up using `docker-compose` like normal for any subsequent boot.
 
