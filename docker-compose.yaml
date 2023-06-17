@@ -17,5 +17,14 @@ services:
       - "2224:2224"
       - "32400:32400"
     volumes:
-      - /home/hugo/reverse-proxy/config:/etc/nginx
-      - /home/hugo/reverse-proxy/certs:/etc/ssl/private
+      - ./config:/etc/nginx
+      - ./certs:/etc/ssl/private
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
