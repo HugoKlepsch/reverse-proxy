@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-subdomains=(buzz gitlab poppin poppintest orion blog lemmy docker-registry)
+subdomains=(buzz gitlab poppin poppintest orion blog lemmy docker-registry garage)
 base_domain="hugo-klepsch.tech"
 domains=()
 echo "Adding domain to list: ${base_domain}"

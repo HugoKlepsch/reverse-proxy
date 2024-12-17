@@ -1,4 +1,4 @@
 data/*
 
 !data/.placeholder
-config/poppin-users.password
+config/*.password
