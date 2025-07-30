@@ -2,3 +2,8 @@ data/*
 
 !data/.placeholder
 config/*.password
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/reverse-proxy.iml
+/.idea/vcs.xml
