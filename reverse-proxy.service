@@ -1,7 +1,7 @@
 [Unit]
 Description=reverse-proxy
-Requires=docker.service reverse-proxy-network.service buzz.service
-After=docker.service reverse-proxy-network.service buzz.service
+Requires=docker.service reverse-proxy-network.service
+After=docker.service reverse-proxy-network.service
 
 [Service]
 Restart=always
