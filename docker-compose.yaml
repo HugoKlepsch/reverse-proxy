@@ -15,7 +15,6 @@ services:
       - "80:80"
       - "443:443"
       - "2224:2224"
-      - "32400:32400"
     volumes:
       - ./config:/etc/nginx
       - ./certs:/etc/ssl/private
