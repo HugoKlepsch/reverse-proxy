@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
-subdomains=(buzz gitlab orion garage tv)
+subdomains=(buzz gitlab orion garage tv blog)
 base_domain="hugo-klepsch.tech"
 domains=()
 echo "Adding domain to list: ${base_domain}"
