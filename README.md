@@ -13,7 +13,7 @@ systemd service that auto-starts on boot.
 ## Port
 
 If your app uses a new port, add it to the list of exposed ports in
-[docker-compose.yaml](docker-compose.yaml).
+[docker-compose.yaml](compose/docker-compose.yaml).
 If your sever has a firewall, add the port to the allowed list.
 
 ## Layer 7 (HTTP) reverse proxy

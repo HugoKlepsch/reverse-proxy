@@ -1,0 +1,29 @@
+networks:
+  reverse-proxy-network:
+    external: true
+
+name: reverse_proxy
+
+services:
+  caddy:
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+      args:
+        - CADDY_VERSION=2.10.2
+    restart: unless-stopped
+    networks:
+      - reverse-proxy-network
+    ports:
+      - 9089:9090 # Caddy metrics
+      - 80:80 # http
+      - 443:443 # https
+      - 2224:2224 # gitlab ssh port
+    volumes:
+      - ../Caddyfile:/etc/caddy/Caddyfile:ro
+      - ../config/:/config/
+      - ../data/:/data/
+    environment:
+      - LINODE_DNS_PAT=${LINODE_DNS_PAT}
+      - LINODE_API_URL=${LINODE_API_URL}
+      - LINODE_API_VERSION=${LINODE_API_VERSION}

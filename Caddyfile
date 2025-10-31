@@ -1,0 +1,92 @@
+{
+	metrics {
+		per_host
+	}
+	email hugo.klepsch@gmail.com
+	log {
+		format json
+	}
+	layer4 {
+	    # Gitlab ssh L4 reverse proxy
+		:2224 {
+			route {
+				proxy {
+				    upstream 10.8.0.22:2224
+				}
+			}
+		}
+	}
+}
+
+(dns_tls) {
+	tls {
+		ca https://acme-v02.api.letsencrypt.org/directory
+		# Or, staging, when testing
+		# ca https://acme-staging-v02.api.letsencrypt.org/directory
+
+		dns linode {
+			api_token {$LINODE_DNS_PAT}
+			api_url {$LINODE_API_URL}
+			api_version {$LINODE_API_VERSION}
+			debug_logs_enabled true
+	    }
+		# Delay to ensure that the record is propagated, but disable
+		# checks because the local check always fails for me. Could be related
+		# to fail-loop described below?
+		# propagation_delay 2m
+		# propagation_timeout -1 # no checks
+		propagation_delay 2m
+		propagation_timeout 3m
+		# When creating a TXT record with "0" TTL, Linode considers this a
+		# request for a record with the "Default" TTL, which results in a zone
+		# file with no TTL value.
+		# Common resolvers like 1.1.1.1 and 8.8.8.8 seem to cache this for a
+		# very long time. (24h?)
+		# Set dns_ttl to the lowest value allowed by Linode to avoid fail-loops
+		# where the CA sees the old TXT record despite the new one being present.
+		dns_ttl 30s
+		resolvers 1.1.1.1
+	}
+}
+
+hugo-klepsch.tech {
+	handle /* {
+		redir https://blog.hugo-klepsch.tech{uri}
+	}
+}
+
+*.hugo-klepsch.tech {
+	import dns_tls
+	log {
+		format json
+	}
+
+	@buzz host buzz.hugo-klepsch.tech
+	handle @buzz {
+		reverse_proxy buzz.reverse-proxy-network:8080
+	}
+
+	@gitlab host gitlab.hugo-klepsch.tech
+	handle @gitlab {
+		reverse_proxy 10.8.0.22:8929
+	}
+
+	@tv host tv.hugo-klepsch.tech
+	handle @tv {
+		reverse_proxy 10.8.0.22:5055
+	}
+
+	@blog host blog.hugo-klepsch.tech
+	handle @blog {
+		reverse_proxy 10.8.0.22:5080
+	}
+
+	handle {
+		respond 404
+	}
+}
+
+# Expose metrics on an endpoint other than the admin API
+:9090 {
+	metrics
+}
