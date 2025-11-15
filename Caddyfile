@@ -81,6 +81,11 @@ hugo-klepsch.tech {
 		reverse_proxy 10.8.0.22:5080
 	}
 
+	@preventsleep host prevent-sleep.hugo-klepsch.tech
+	handle @preventsleep {
+		reverse_proxy 10.8.0.22:5081
+	}
+
 	handle {
 		respond 404
 	}
