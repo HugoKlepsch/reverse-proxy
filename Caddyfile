@@ -11,7 +11,7 @@
 		:2224 {
 			route {
 				proxy {
-				    upstream 10.8.0.22:2224
+				    upstream 10.8.0.27:2224
 				}
 			}
 		}
@@ -68,22 +68,22 @@ hugo-klepsch.tech {
 
 	@gitlab host gitlab.hugo-klepsch.tech
 	handle @gitlab {
-		reverse_proxy 10.8.0.22:8929
+		reverse_proxy 10.8.0.27:8929
 	}
 
 	@tv host tv.hugo-klepsch.tech
 	handle @tv {
-		reverse_proxy 10.8.0.22:5055
+		reverse_proxy 10.8.0.27:5055
 	}
 
 	@blog host blog.hugo-klepsch.tech
 	handle @blog {
-		reverse_proxy 10.8.0.22:5080
+		reverse_proxy 10.8.0.27:5080
 	}
 
 	@preventsleep host prevent-sleep.hugo-klepsch.tech
 	handle @preventsleep {
-		reverse_proxy 10.8.0.22:5081
+		reverse_proxy 10.8.0.27:5081
 	}
 
 	handle {
